@@ -68,3 +68,7 @@ whatWentWrong a = [msg x | x <- (sortByTime . severeErrors . extractErrors) a]
   where
     msg :: LogMessage -> String
     msg (LogMessage _ _ a) = a
+
+
+
+-- end of assignment
