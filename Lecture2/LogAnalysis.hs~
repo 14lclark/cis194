@@ -1,0 +1,22 @@
+{-# OPTIONS_GHC -Wall #-}
+
+module LogAnalysis where
+
+import Log
+
+parseMessage :: String -> LogMessage
+parseMessage p
+  | whatType == ["E"] = LogMessage (Error $ go 1 sep) (go 2 sep) (message 3)
+  | whatType == ["I"] = LogMessage Info timeIW messIW
+  | whatType == ["W"] = LogMessage Warning timeIW messIW
+  | otherwise         = Unknown p
+  where
+    go n = read . head . (take 1) . (drop n)
+    sep = words p
+    whatType = take 1 sep
+    message n = unwords $ drop n sep
+    timeIW = go 1 sep
+    messIW = message 2
+    
+parse :: String -> [LogMessage]
+parse p = [parseMessage x | x <- (lines p)]
