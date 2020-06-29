@@ -17,7 +17,7 @@ parseMessage p
     message n = unwords $ drop n sep
     timeIW = go 1 sep
     messIW = message 2
-    
+
 parse :: String -> [LogMessage]
 parse p = [parseMessage x | x <- (lines p)]
 
@@ -34,7 +34,7 @@ insert log1@(LogMessage _ t1 _) n@(Node tr1 log2@(LogMessage _ t2 _) tr2)
     insert1 = insert log1
 -- Non-exhaustive pattern because no Unknown
 -- LogMessage should get through
-              
+
 build :: [LogMessage] -> MessageTree
 build [] = Leaf
 build (x:xs) = insert x $ build xs
@@ -47,7 +47,7 @@ inOrder (Node tr1 a tr2) = (inOrder tr1) ++ [a] ++ (inOrder tr2)
 
 sortByTime :: [LogMessage] -> [LogMessage]
 sortByTime = inOrder . build
-                           
+
 extractErrors :: [LogMessage] -> [LogMessage]
 extractErrors [] = []
 extractErrors (log1@(LogMessage (Error _) _ _):xs) =
