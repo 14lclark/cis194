@@ -36,6 +36,26 @@ foldlIntList f b (Cons x xs) = foldlIntList f (b `f` x) xs
 data List t
   = E
   | C t (List t)
+  deriving Show
+
+-- Now we can rewrite the above functions in the general list setting
+
+mapList :: (a -> b) -> List a -> List b
+mapList _ E = E
+mapList f (C x xs) = C (f x) (mapList f xs)
+
+
+filterList :: (t -> Bool) -> List t -> List t
+filterList _ E = E
+filterList p (C x xs)
+  | p x       = C x (filterList p xs)
+  | otherwise = filterList p xs
+
+
+
+
+
+
 
 
 
