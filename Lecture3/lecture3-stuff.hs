@@ -65,4 +65,22 @@ filterList p (C x xs)
 
 
 
-----------
+---------- Total and Partial Functions
+
+-- A partial function is a function for which there are certain values
+-- which will cause the program to crash or recurse infinitely.
+-- A total function is a function which has no such values.
+
+-- head, tail, init, last, and (!!) are partial Prelude functions
+-- which should be avoided.
+
+
+
+
+
+
+
+
+
+
+-----------
