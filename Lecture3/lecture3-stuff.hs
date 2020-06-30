@@ -54,17 +54,6 @@ filterList p (C x xs)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 ---------- Total and Partial Functions
 
 -- A partial function is a function for which there are certain values
@@ -74,13 +63,37 @@ filterList p (C x xs)
 -- head, tail, init, last, and (!!) are partial Prelude functions
 -- which should be avoided.
 
+-- We can rewrite head in a safe way which doesn't crash by using Maybe
+
+safeHead :: [a] -> Maybe a
+safeHead [] = Nothing
+safeHead (x:_) = Just x
+
+-- This is a good idea because
+-- 1. safeHead never crashes
+-- 2. The type tells us it may crash for some inputs
+-- 3. The type system makes sure users appropriately check the return value
+
+
+-- If there's a guarantee of non-empty list and we want to use head/tail,
+-- define a new type!
+
+data NonEmptyList a = NEL a [a]
+
+nelToList :: NonEmptyList a -> [a]
+nelToList (NEL x xs) = x:xs
+
+listToNEL :: [a] -> Maybe (NonEmptyList a)
+listToNEL [] = Nothing
+listToNEL (x:xs) = Just $ NEL x xs
+
+headNEL :: NonEmptyList a -> a
+headNEL (NEL a _) = a
+
+tailNEL :: NonEmptyList a -> [a]
+tailNEL (NEL _ as) = as
 
 
 
 
-
-
-
-
-
------------
+----------- EOF
