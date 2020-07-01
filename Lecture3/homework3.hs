@@ -1,5 +1,9 @@
 {-# OPTIONS_GHC -Wall #-}
 
+------- CODE GOLF HW
+------- Write functions as short as possible,
+------- not including types or spaces
+
 ---- Exercise 1
 ---- I'm sure nth can be shorter, maybe using filter somehow
 
@@ -16,10 +20,12 @@ skips x = map (nth x 1) [1 .. (length x)]
 -- Local maxima
 
 localMaxima :: [Integer] -> [Integer]
-localMaxima (x:y:z:xs)
-  | x < y && z < y = y:(localMaxima (z:xs))
-  | True = localMaxima (y:z:xs)
-localMaxima _ = []
+localMaxima k =
+  case k of
+    (x:y:z:xs)
+      | x < y && z < y -> y : (localMaxima (z : xs))
+      | True -> localMaxima (y : z : xs)
+    _ -> []
 
 {-
 I started this one by dealing with the empty, single, and double element lists
