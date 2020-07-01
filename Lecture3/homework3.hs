@@ -63,16 +63,16 @@ count :: [Counter] -> [Int] -> [Counter]
 count acc []     = acc
 count acc (x:xs) = count (countOne acc x) xs
 
-makeBarsList :: Max -> [Counter] -> [String]
-makeBarsList m (y:ys) = reverse $ go (y : ys) m
+makeBarsList :: Max -> [Counter] -> String
+makeBarsList m (y:ys) = unlines $ reverse $ go (y : ys) m
   where
     go (x:xs) k = zipWith (++) (lines $ make x k) (go xs k)
     go _ _ = cycle [""]
-makeBarsList _ _ = cycle [""]
+makeBarsList _ _ = ""
 
 histogram :: [Int] -> String
 histogram xs =
-  (unlines $ (makeBarsList $ maximum a) $ a) ++ ("==========\n") ++ ("0123456789")
+  ((makeBarsList $ maximum a) $ a) ++ ("==========\n") ++ ("0123456789")
           where
             a = count (take 10 $ cycle [0]) xs
 
