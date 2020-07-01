@@ -42,7 +42,39 @@ with the remaining issues.
 -}
 
 -- Exercise 3
-histogram :: [Integer] -> String
+
+type Counter = Int
+type Max     = Int
+
+make :: Counter -> Max -> String
+make n k = (go n "*\n") ++ (go (maximum [1, (k - n)]) " \n")
+  where
+    go a = (take $ 2 * a) . cycle
+
+countOne :: [Counter] -> Int -> [Counter]
+countOne acc x = map inc indAcc
+  where
+    indAcc = zipWith ((,)) [1 ..] acc
+    inc (i, b)
+      | x == i - 1 = b + 1
+      | otherwise = b
+
+count :: [Counter] -> [Int] -> [Counter]
+count acc []     = acc
+count acc (x:xs) = count (countOne acc x) xs
+
+makeBarsList :: Max -> [Counter] -> [String]
+makeBarsList m (y:ys) = reverse $ go (y : ys) m
+  where
+    go (x:xs) k = zipWith (++) (lines $ make x k) (go xs k)
+    go _ _ = cycle [""]
+makeBarsList _ _ = cycle [""]
+
+histogram :: [Int] -> String
+histogram xs =
+  (unlines $ (makeBarsList $ maximum a) $ a) ++ ("==========\n") ++ ("0123456789")
+          where
+            a = count (take 10 $ cycle [0]) xs
 
 
 
