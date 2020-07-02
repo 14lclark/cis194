@@ -42,6 +42,7 @@ with the remaining issues.
 -}
 
 -- Exercise 3
+-- This one was pretty hard, needs a lot more work to be golfed. Prelude functions?
 
 type Counter = Int
 type Max     = Int
