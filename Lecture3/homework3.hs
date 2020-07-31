@@ -10,16 +10,18 @@
 nth :: [a] -> Int -> Int -> [a]
 nth [] _ _ = []
 nth (x:xs) k n
-  | n == k = x : (nth xs 1 n)
+  | n == k    = x : (nth xs 1 n)
   | otherwise = nth xs (k + 1) n
 
 skips :: [a] -> [[a]]
 skips x = map (nth x 1) [1 .. (length x)]
 
+
 -- Exercise 2
 -- Local maxima
 
 localMaxima :: [Integer] -> [Integer]
+
 localMaxima k =
   case k of
     (x:y:z:xs)
@@ -63,6 +65,7 @@ count :: [Counter] -> [Int] -> [Counter]
 count acc []     = acc
 count acc (x:xs) = count (countOne acc x) xs
 
+
 makeBarsList :: Max -> [Counter] -> String
 makeBarsList m (y:ys) = unlines $ reverse $ go (y : ys) m
   where
@@ -75,7 +78,6 @@ histogram xs =
   ((makeBarsList $ maximum a) $ a) ++ ("==========\n") ++ ("0123456789")
           where
             a = count (take 10 $ cycle [0]) xs
-
 
 
 ------------------ EOF
